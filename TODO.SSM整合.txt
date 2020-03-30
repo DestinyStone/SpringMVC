@@ -1,0 +1,42 @@
+1， 创建 applicationContext.xml 文件
+导入以下内容
+<context:component-scan base-package="controller, mapper, service"></context:component-scan>
+<mvc:annotation-driven></mvc:annotation-driven>
+
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+	<property name="url" value="jdbc:mysql://localhost:3306/loginTest"></property>
+	<property name="username" value="root"></property>
+	<property name="password" value="1314LOVE"></property>
+</bean>
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="dataSource" ref="dataSource"></property>
+	<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+</bean>
+<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	<property name="basePackage" value="mapper"></property>
+</bean>
+
+2， web.xml 文件中导入以下内容
+<servlet>
+	<servlet-name>springDispatcherServlet</servlet-name>
+	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	<init-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</init-param>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>springDispatcherServlet</servlet-name>
+	<url-pattern>/</url-pattern>
+</servlet-mapping>
+<!-- tomcat运行时， 加载bean容器 -->
+<context-param>
+	<param-name>contextConfigLocation</param-name>
+	<param-value>classpath:applicationContext.xml</param-value>
+</context-param>
+<listener>
+	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>

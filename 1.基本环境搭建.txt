@@ -1,0 +1,27 @@
+1， 创建动态java网站开发
+2， 传教springmvc.xml 的bean文件
+3， web.xml 下加入以下代码（可使用 DispatcherServlet 快捷键 快速导入）
+<servlet>
+	<servlet-name>springDispatcherServlet</servlet-name>
+	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	<init-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:springmvc.xml</param-value>   # 这里要指定文件路径
+	</init-param>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>springDispatcherServlet</servlet-name>
+	<url-pattern>/</url-pattern>      # 指定/
+</servlet-mapping>
+4， 创建controller类
+@Controller
+public class MyController {
+	@RequestMapping("/123")
+	@ResponseBody
+	public String test() {
+		return "222";
+	}	
+}
+5， 在springmvc.xml 中加入该扫描包
+<context:component-scan base-page="controller" />

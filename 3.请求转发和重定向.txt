@@ -1,0 +1,3 @@
+return 中 增加前缀
+a. 请求转发 return "forward:success.html"    //地址栏不会变
+b. 重定向 return "redirect:success.html"     //地址栏会变

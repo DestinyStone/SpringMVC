@@ -1,0 +1,20 @@
+a. 后端获取前端json数据
+前端
+$.ajax({
+	type: 'POST',
+	url: "123",
+	contentType: "application/json",//如果想以json格式把数据提交到后台的话，这个必须有，否则只会当做表单提交
+	data: JSON.stringify({"id":"1", "name": "zs"}),//JSON.stringify()必须有,否则只会当做表单的格式提交
+	dataType: "json",//期待返回的数据类型
+	success: function(data){
+		console.log("success:"+data);
+	}
+});
+后端，
+@RequestBody Persion persion
+注意 如果要封装成javaBean来接收， 如果接收的数据是没有的javaBean， 则可以使用@RequestBody JSONObject jsonObject 来接收
+然后使用  JSONObject 内部方法进行转化
+
+b. 后端向前端传递json数据
+	增加注解 @ResponseBody
+	注意传递的json数据中， 前端可直接使用，即传递的是对象，而不是字符串

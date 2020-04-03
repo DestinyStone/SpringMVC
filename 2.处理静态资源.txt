@@ -1,0 +1,2 @@
+<mvc:default-servlet-handler/>   //使用默认的mvc处理器， 即静态资源交给tomcat， 路径交给sprigmvc
+<mvc:annotation-driven></mvc:annotation-driven>  搭配使用， 兼容

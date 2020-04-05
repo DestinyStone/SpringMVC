@@ -1,0 +1,5 @@
+a. 方法和类均可以使用RequestMapping    访问时要先访问RequestMapping的映射
+b. 内置参数
+	value ="映射名",
+	method = RequestMethod.POST   限制访问方法
+	parames={"name"}  必须包含name

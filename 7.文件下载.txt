@@ -1,0 +1,45 @@
+文件操作
+文件下载
+	导报  io, fileupload
+	注册 bean CommonsMultipartResolver   id="multipartResolver" 不可变
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   	    <property name="defaultEncoding" value="UTF-8"/>
+  	  </bean>
+		参数， maxUploadSize  ...
+	表单 Multipart/form-data
+	servlet 保存 @RequestParam("file") MultipartFile file
+
+文件名字
+file.getOriginalFilename();
+
+HttpHeaders使用
+	HttpHeaders headers = new HttpHeaders();
+	headers.add("Content-Disposition", "attchement;filename=" + file.getName());
+
+文件上传
+ResponseEntity<byte[]>(byte[] 文件的缓存, HttpHeader 头消息， HttpStatus.ok 状态码)
+
+乱码处理
+谷歌浏览器： URLEncoder.encode("filename", "utf-8");
+火狐处理器： new String("filename".getBytes("utf-8"), "iso-8859-1");
+
+如何判断用户访问的是火狐浏览器还是谷歌   
+获取消息头   @RequestHeader("User-Agent")
+	User-Agent
+	火狐  Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0
+	谷歌 Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36
+
+全部代码
+@RequestMapping(value="download")
+public ResponseEntity<byte[]> download(@RequestHeader("User-Agent") String userAgent) throws IOException 		
+	File file = new File("C:\\Users\\ASUS\\Desktop\\毛概\\如何看待新民主主义.pptx");
+	InputStream input = new FileInputStream(file);
+	byte[] buff = new byte[input.available()];
+	input.read(buff);
+		
+	HttpHeaders httpHeader = new HttpHeaders();
+	// 解决 谷歌乱码
+	httpHeader.add("Content-Disposition", "attchement;filename=" + URLEncoder.encode(file.getName(), "utf-8"));
+		
+	return new ResponseEntity<byte[]>(buff, httpHeader, HttpStatus.OK);
+}

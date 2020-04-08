@@ -41,5 +41,7 @@ getOriginalFileName()  获取文件名称
 
 
 后续优化问题
+如果前端是多个文件同时上传， 可使用 List<MultipartFile>  来接收 
+
 
   
